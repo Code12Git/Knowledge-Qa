@@ -11,7 +11,7 @@ load_dotenv()
 
 QDRANT_URL = os.getenv("QDRANT_URL")
 
-
+print("Qdrant URL:", QDRANT_URL)
 # Indexing phase we are handling here:
 async def upload_document(file: UploadFile):
     filename = await file_loader.save(file)

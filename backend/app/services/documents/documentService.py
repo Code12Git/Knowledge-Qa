@@ -1,4 +1,5 @@
 from fastapi import UploadFile
+from qdrant_client import QdrantClient
 from app.helpers.fileLoader import file_loader
 from app.helpers.textExtractor import text_extractor
 from langchain_text_splitters import RecursiveCharacterTextSplitter
@@ -27,10 +28,15 @@ async def upload_document(file: UploadFile):
     print("Chunks",chunks)
     embedding_model = OpenAIEmbeddings(model="text-embedding-3-large")
     print("Embedding model created",embedding_model)
+    client = QdrantClient(
+        url=QDRANT_URL,
+        https=True,        
+        timeout=30,
+    )
     QdrantVectorStore.from_documents(
         documents=chunks,
         embedding=embedding_model,
-        url=QDRANT_URL,
+        client=client,
         collection_name="sample_collection", 
     )
     print(f"Extracted {len(docs)} pages, {len(chunks)} chunks from {filename}")

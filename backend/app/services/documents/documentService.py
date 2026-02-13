@@ -16,14 +16,17 @@ QDRANT_URL = os.getenv("QDRANT_URL")
 async def upload_document(file: UploadFile):
     filename = await file_loader.save(file)
     docs = text_extractor.extract(filename)
+    print("Docs",docs)
     text_splitter = RecursiveCharacterTextSplitter(
         chunk_size=1000,
         chunk_overlap=200,
         length_function=len
     )
+    print("Text Splitter Created",text_splitter)
     chunks = text_splitter.split_documents(documents=docs)
+    print("Chunks",chunks)
     embedding_model = OpenAIEmbeddings(model="text-embedding-3-large")
-    
+    print("Embedding model created",embedding_model)
     QdrantVectorStore.from_documents(
         documents=chunks,
         embedding=embedding_model,

@@ -11,18 +11,19 @@ class HealthController:
         backend_status = {"status": "healthy"}
 
         # Checking Qdrant
-        qdrant_url = os.getenv("QDRANT_URL", "http://localhost:6333")
+        qdrant_url = os.getenv("QDRANT_URL")
         try:
-            async with httpx.AsyncClient(timeout=5) as client:
-                res = await client.get(f"{qdrant_url}/collections")
-                qdrant_status = {
-                    "status": "healthy" if res.status_code == 200 else "unhealthy",
-                    "url": qdrant_url,
-                }
+           async with httpx.AsyncClient(timeout=10, verify=False) as client:
+            res = await client.get(f"{qdrant_url}/collections")
+
+            if res.status_code == 200 and res.json().get("status") == "ok":
+                qdrant_status = {"status": "healthy", "url": qdrant_url}
+            else:
+                qdrant_status = {"status": "unhealthy", "url": qdrant_url, "error": res.text}
         except Exception as e:
             qdrant_status = {"status": "unhealthy", "url": qdrant_url, "error": str(e)}
 
-        # Checking OpenAI
+        # Check OpenAI
         api_key = os.getenv("OPENAI_API_KEY")
         if api_key:
             try:

@@ -14,7 +14,7 @@ class HealthController:
         qdrant_url = os.getenv("QDRANT_URL", "http://localhost:6333")
         try:
             async with httpx.AsyncClient(timeout=5) as client:
-                res = await client.get(f"{qdrant_url}/healthz")
+                res = await client.get(f"{qdrant_url}/collections")
                 qdrant_status = {
                     "status": "healthy" if res.status_code == 200 else "unhealthy",
                     "url": qdrant_url,

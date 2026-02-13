@@ -1,12 +1,13 @@
 from fastapi import HTTPException
 from app.services.documents.documentService import upload_docs, get_all_documents, get_document_content
+from fastapi import BackgroundTasks
 
-
+    
 class DocumentController:
     # For uploading Purpose
-    async def upload(self, file):
+    async def upload(self, file, background_tasks: BackgroundTasks):
         try:
-            result = await upload_docs(file)
+            result = await upload_docs(file,background_tasks)
             return {
                 "success": True,
                 "statusCode": 200,

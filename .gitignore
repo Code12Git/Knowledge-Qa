@@ -1,0 +1,69 @@
+# .gitignore
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.env
+.env
+*.sqlite3
+*.db
+*.log
+
+# VSCode
+.vscode/
+.history/
+
+# Node
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Build outputs
+dist/
+build/
+*.egg-info/
+*.egg
+
+# Frontend
+frontend/dist/
+frontend/.env
+frontend/.env.*
+
+# Backend
+backend/.env
+backend/.env.*
+backend/data/uploads/
+backend/data/uploads/*
+
+# Misc
+*.swp
+*.swo
+
+# Test/coverage
+coverage/
+*.cover
+*.pyc
+*.pyo
+*.pyd
+.cache/
+pytest_cache/
+htmlcov/
+
+# IDE
+.idea/
+*.iml
+
+# Docker
+**/data/qdrant/
+**/data/qdrant/*
+
+# Ignore local files
+*.local

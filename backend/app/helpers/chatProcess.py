@@ -14,7 +14,7 @@ QDRANT_URL = os.getenv("QDRANT_URL")
 
 
 def get_vector_store():
-    embedding_model = OpenAIEmbeddings(model="text-embedding-3-large")
+    embedding_model = OpenAIEmbeddings(model="text-embedding-3-small")
     return QdrantVectorStore.from_existing_collection(
         collection_name="sample_collection",
         embedding=embedding_model,
